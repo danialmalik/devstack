@@ -49,3 +49,7 @@ syncs:
     host_disk_mount_mode: 'cached'
     src: '../frontend-app-learning/'
     sync_excludes: [ '.git', '.idea' ]
+
+  source-sync:
+    host_disk_mount_mode: 'cached'
+    src: '../src/'
