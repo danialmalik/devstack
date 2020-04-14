@@ -63,9 +63,4 @@ volumes:
     external: true
   program-console-sync:
     external: true
-  course-authoring-sync:
-    external: true
-  frontend-app-library-authoring-sync:
-    external: true
-  source-sync:
-      external: true
+
