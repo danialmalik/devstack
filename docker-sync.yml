@@ -63,3 +63,7 @@ syncs:
     host_disk_mount_mode: 'cached'
     src: '../frontend-app-library-authoring/'
     sync_excludes: [ '.git', '.idea' ]
+
+  source-sync:
+    host_disk_mount_mode: 'cached'
+    src: '../src/'
