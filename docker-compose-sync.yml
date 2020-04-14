@@ -64,3 +64,5 @@ volumes:
   program-console-sync:
     external: true
 
+  source-sync:
+    external: true
