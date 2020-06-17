@@ -114,8 +114,8 @@ services:
       default:
         aliases:
           - edx.devstack.mongo
-    # ports:
-    #  - "27017:27017"
+    ports:
+     - "27017:27017"
     volumes:
       - mongo_data:/data/db
 
@@ -131,8 +131,8 @@ services:
       default:
         aliases:
           - edx.devstack.mysql
-    # ports:
-    #   - "3506:3306"
+    ports:
+      - "3506:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
