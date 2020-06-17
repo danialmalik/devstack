@@ -342,7 +342,8 @@ services:
       CELERY_BROKER_VHOST: 10
       CELERY_BROKER_PASSWORD: password
       DJANGO_WATCHMAN_TIMEOUT: 30
-    image: edxops/registrar:${OPENEDX_RELEASE:-latest}
+    # image: edxops/registrar:${OPENEDX_RELEASE:-latest}
+    image: edxops/registrar:latest
     networks:
       default:
         aliases:
@@ -376,7 +377,8 @@ services:
       CELERY_BROKER_VHOST: 10
       CELERY_BROKER_PASSWORD: password
       DJANGO_WATCHMAN_TIMEOUT: 30
-    image: edxops/registrar:${OPENEDX_RELEASE:-latest}
+    # image: edxops/registrar:${OPENEDX_RELEASE:-latest}
+    image: edxops/registrar:latest
     networks:
       default:
         aliases:
