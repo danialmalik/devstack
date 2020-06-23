@@ -66,7 +66,8 @@ COMPOSE_FILE := $(COMPOSE_FILE):docker-compose-watchers-nfs.yml
 endif
 
 ifeq ($(FS_SYNC_STRATEGY),docker-sync)
-COMPOSE_FILE := docker-compose-sync.yml
+COMPOSE_FILE := docker-compose-host.yml
+COMPOSE_FILE := $(COMPOSE_FILE):docker-compose-sync.yml
 endif
 
 ifndef COMPOSE_FILE
