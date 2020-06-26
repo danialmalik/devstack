@@ -370,6 +370,7 @@ backup:
 	docker run --rm --volumes-from $$(make -s dev.print-container.mysql) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mysql.tar.gz /var/lib/mysql
 	docker run --rm --volumes-from $$(make -s dev.print-container.mongo) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mongo.tar.gz /data/db
 	docker run --rm --volumes-from $$(make -s dev.print-container.elasticsearch) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/elasticsearch.tar.gz /usr/share/elasticsearch/data
+	cp -rf .dev/backups-$(COMPOSE_PROJECT_NAME) .dev/backups-$(COMPOSE_PROJECT_NAME)-$$(date "+%Y-%m-%d---%H:%M:%S")
 
 # [NOTE]
 # restore: dev.up.mysql+mongo+elasticsearch ## Restore all data volumes from the host. WARNING: THIS WILL OVERWRITE ALL EXISTING DATA!
