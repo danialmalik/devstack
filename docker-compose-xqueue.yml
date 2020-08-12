@@ -3,6 +3,8 @@ version: "2.1"
 services:
   xqueue:
     container_name: "edx.${COMPOSE_PROJECT_NAME:-devstack}.xqueue"
+    # Xqueue causes issues for Ironwood?
+    # image: edxops/xqueue:juniper.master
     image: edxops/xqueue:${OPENEDX_RELEASE:-latest}
     command: bash -c 'source /edx/app/xqueue/xqueue_env && while true; do python /edx/app/xqueue/xqueue/manage.py runserver 0.0.0.0:18040 ; sleep 2; done'
     volumes:
@@ -17,6 +19,8 @@ services:
 
   xqueue_consumer:
     container_name: "edx.${COMPOSE_PROJECT_NAME:-devstack}.xqueue_consumer"
+    # Xqueue causes issues for Ironwood?
+    # image: edxops/xqueue:juniper.master
     image: edxops/xqueue:${OPENEDX_RELEASE:-latest}
     command: bash -c 'source /edx/app/xqueue/xqueue_env && while true; do python /edx/app/xqueue/xqueue/manage.py run_consumer ; sleep 2; done'
     volumes:
