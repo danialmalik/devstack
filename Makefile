@@ -361,17 +361,6 @@ dev.validate: ## Print effective Docker Compose config, validating files in COMP
 	docker-compose config
 
 
-########################################################################################
-# Developer interface: Runtime service management (caching, logs, shells).
-########################################################################################
-
-dev.cache-programs: ## Copy programs from Discovery to Memcached for use in LMS.
-	$(WINPTY) bash ./programs/provision.sh cache
-
-dev.restart-devserver: _expects-service.dev.restart-devserver
-
-dev.restart-devserver.forum:
-	docker-compose exec forum bash -c 'kill $$(ps aux | grep "ruby app.rb" | egrep -v "while|grep" | awk "{print \$$2}")'
 
 dev.restart-devserver.%: ## Kill an edX service's development server. Watcher should restart it.
 	# Applicable to Django services only.
