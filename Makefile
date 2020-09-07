@@ -226,14 +226,15 @@ dev.provision.%: ## Provision specified services.
 	$(WINPTY) bash ./provision.sh $*
 
 dev.backup: dev.up.mysql+mongo+elasticsearch ## Write all data volumes to the host.
-	docker run --rm --volumes-from $$(make -s dev.print-container.mysql) -v $$(pwd)/.dev/backups:/backup debian:jessie tar zcvf /backup/mysql.tar.gz /var/lib/mysql
-	docker runsql --rm --volumes-from $$(make -s dev.print-container.mongo) -v $$(pwd)/.dev/backups:/backup debian:jessie tar zcvf /backup/mongo.tar.gz /data/db
-	docker run --rm --volumes-from $$(make -s dev.print-container.elasticsearch) -v $$(pwd)/.dev/backups:/backup debian:jessie tar zcvf /backup/elasticsearch.tar.gz /usr/share/elasticsearch/data
+	docker run --rm --volumes-from $$(make -s dev.print-container.mysql) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mysql.tar.gz /var/lib/mysql
+	docker run --rm --volumes-from $$(make -s dev.print-container.mongo) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mongo.tar.gz /data/db
+	docker run --rm --volumes-from $$(make -s dev.print-container.elasticsearch) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/elasticsearch.tar.gz /usr/share/elasticsearch/data
+	cp -rf .dev/backups-$(COMPOSE_PROJECT_NAME) .dev/backups-$(COMPOSE_PROJECT_NAME)-$$(date "+%Y-%m-%d---%H:%M:%S")
 
 dev.restore: dev.up.mysql+mongo+elasticsearch ## Restore all data volumes from the host. WILL OVERWRITE ALL EXISTING DATA!
-	docker run --rm --volumes-from $$(make -s dev.print-container.mysql) -v $$(pwd)/.dev/backups:/backup debian:jessie tar zxvf /backup/mysql.tar.gz
-	docker run --rm --volumes-from $$(make -s dev.print-container.mongo) -v $$(pwd)/.dev/backups:/backup debian:jessie tar zxvf /backup/mongo.tar.gz
-	docker run --rm --volumes-from $$(make -s dev.print-container.elasticsearch) -v $$(pwd)/.dev/backups:/backup debian:jessie tar zxvf /backup/elasticsearch.tar.gz
+	docker run --rm --volumes-from $$(make -s dev.print-container.mysql) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zxvf /backup/mysql.tar.gz
+	docker run --rm --volumes-from $$(make -s dev.print-container.mongo) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zxvf /backup/mongo.tar.gz
+	docker run --rm --volumes-from $$(make -s dev.print-container.elasticsearch) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zxvf /backup/elasticsearch.tar.gz
 
 # List of Makefile targets to run database migrations, in the form dev.migrate.$(service)
 # Services will only have their migrations added here
@@ -616,7 +617,7 @@ e2e-tests: dev.up.lms+studio ## Run the end-to-end tests against the service con
 
 e2e-tests.with-shell: dev.up.lms+studio ## Start the end-to-end tests container with a shell.
 	docker run -it --network=$(COMPOSE_PROJECT_NAME)_default -v $(DEVSTACK_WORKSPACE)/edx-e2e-tests:/edx-e2e-tests --env-file $(DEVSTACK_WORKSPACE)/edx-e2e-tests/devstack_env edxops/e2e env TERM=$(TERM) bash
-	
+
 
 validate-lms-volume: ## Validate that changes to the local workspace are reflected in the LMS container.
 	touch $(DEVSTACK_WORKSPACE)/edx-platform/testfile
