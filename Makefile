@@ -230,7 +230,7 @@ dev.backup: dev.up.mysql+mongo+mysql57+elasticsearch ## Write all data volumes t
 	docker run --rm --volumes-from $$(make -s dev.print-container.mysql) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mysql.tar.gz /var/lib/mysql
 	docker run --rm --volumes-from $$(make -s dev.print-container.mongo) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mongo.tar.gz /data/db
 	docker run --rm --volumes-from $$(make -s dev.print-container.elasticsearch) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/elasticsearch.tar.gz /usr/share/elasticsearch/data
-	cp -rf .dev/backups-$(COMPOSE_PROJECT_NAME) .dev/backups-$(COMPOSE_PROJECT_NAME)-$$(date "+%Y-%m-%d---%H:%M:%S")
+	cp -rf .dev/backups-$(COMPOSE_PROJECT_NAME) .dev/backups-$(COMPOSE_PROJECT_NAME)-$$(date "+%Y-%m-%d---%H_%M_%S")
 
 dev.restore: dev.up.mysql+mysql57+mongo+elasticsearch ## Restore all data volumes from the host. WILL OVERWRITE ALL EXISTING DATA!
 	docker run --rm --volumes-from $$(make -s dev.print-container.mysql) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zxvf /backup/mysql.tar.gz
@@ -405,7 +405,7 @@ dev.shell: _expects-service.dev.shell
 # 	docker run --rm --volumes-from $$(make -s dev.print-container.mysql) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mysql.tar.gz /var/lib/mysql
 # 	docker run --rm --volumes-from $$(make -s dev.print-container.mongo) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mongo.tar.gz /data/db
 # 	docker run --rm --volumes-from $$(make -s dev.print-container.elasticsearch) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/elasticsearch.tar.gz /usr/share/elasticsearch/data
-# 	cp -rf .dev/backups-$(COMPOSE_PROJECT_NAME) .dev/backups-$(COMPOSE_PROJECT_NAME)-$$(date "+%Y-%m-%d---%H:%M:%S")
+# 	cp -rf .dev/backups-$(COMPOSE_PROJECT_NAME) .dev/backups-$(COMPOSE_PROJECT_NAME)-$$(date "+%Y-%m-%d---%H_%M_%S")
 
 # # [NOTE]
 # # restore: dev.up.mysql+mongo+elasticsearch ## Restore all data volumes from the host. WARNING: THIS WILL OVERWRITE ALL EXISTING DATA!
