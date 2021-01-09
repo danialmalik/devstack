@@ -226,7 +226,7 @@ dev.provision.%: ## Provision specified services.
 	$(WINPTY) bash ./provision.sh $*
 
 dev.backup: dev.up.mysql+mongo+mysql57+elasticsearch ## Write all data volumes to the host.
-	docker run --rm --volumes-from $$(make -s dev.print-container.mysql57) -v $$(pwd)/.dev/backups:/backup-$(COMPOSE_PROJECT_NAME) debian:jessie tar zcvf /backup/mysql57.tar.gz /var/lib/mysql
+	docker run --rm --volumes-from $$(make -s dev.print-container.mysql57) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mysql57.tar.gz /var/lib/mysql
 	docker run --rm --volumes-from $$(make -s dev.print-container.mysql) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mysql.tar.gz /var/lib/mysql
 	docker run --rm --volumes-from $$(make -s dev.print-container.mongo) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/mongo.tar.gz /data/db
 	docker run --rm --volumes-from $$(make -s dev.print-container.elasticsearch) -v $$(pwd)/.dev/backups-$(COMPOSE_PROJECT_NAME):/backup debian:jessie tar zcvf /backup/elasticsearch.tar.gz /usr/share/elasticsearch/data
@@ -634,4 +634,3 @@ build-courses: ## Build course and provision studio, and ecommerce with it.
 	$(WINPTY) bash ./course-generator/build-course-json.sh course-generator/tmp-config.json
 	$(WINPTY) bash ./course-generator/create-courses.sh --studio --ecommerce course-generator/tmp-config.json
 	rm course-generator/tmp-config.json
-
