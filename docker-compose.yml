@@ -172,7 +172,8 @@ services:
     container_name: "edx.${COMPOSE_PROJECT_NAME:-devstack}.credentials"
     hostname: credentials.devstack.edx
     depends_on:
-      - mysql57
+      # - mysql57
+      - mysql
       - memcached
       - lms
     # Allows attachment to the credentials service using 'docker attach <containerID>'.
@@ -197,7 +198,8 @@ services:
     container_name: "edx.${COMPOSE_PROJECT_NAME:-devstack}.discovery"
     hostname: discovery.devstack.edx
     depends_on:
-      - mysql57
+      # - mysql57
+      - mysql
       - elasticsearch
       - memcached
     # Allows attachment to the discovery service using 'docker attach <containerID>'.
@@ -225,7 +227,8 @@ services:
     container_name: "edx.${COMPOSE_PROJECT_NAME:-devstack}.ecommerce"
     hostname: ecommerce.devstack.edx
     depends_on:
-      - mysql57
+      # - mysql57
+      - mysql
       - memcached
       - lms
       - discovery
@@ -252,7 +255,8 @@ services:
       - devpi
       - elasticsearch7
       - lms
-      - mysql57
+      # - mysql57
+      - mysql
     image: edxops/notes:${OPENEDX_RELEASE:-latest}
     networks:
       default:
@@ -295,7 +299,8 @@ services:
     hostname: lms.devstack.edx
     depends_on:
       - devpi
-      - mysql57
+      # - mysql57
+      - mysql
       - memcached
       - mongo
       - discovery
@@ -334,7 +339,8 @@ services:
     depends_on:
       - discovery
       - lms
-      - mysql57
+      # - mysql57
+      - mysql
       - memcached
       - redis
       - registrar-worker
@@ -373,7 +379,8 @@ services:
     hostname: registrar-worker.devstack.edx
     depends_on:
       - lms
-      - mysql57
+      # - mysql57
+      - mysql
       - redis
     stdin_open: true
     tty: true
@@ -408,7 +415,8 @@ services:
     hostname: studio.devstack.edx
     depends_on:
       - devpi
-      - mysql57
+      # - mysql57
+      - mysql
       - elasticsearch7
       - memcached
       - mongo
